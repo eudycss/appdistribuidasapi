@@ -37,7 +37,7 @@
   <h1>CRUD API REST FETCH</h1>
   <section class="crud">
     <article>
-      <h2 class="crud-title">Agregar Santo</h2>
+      <h2 class="crud-title">Agregar </h2>
       <form class="crud-form col-6" >
         <div class="mb-3">
         <input type="text" name="cl_cedula" placeholder="cedula" required>
@@ -64,7 +64,7 @@
       </form>
     </article>
     <article>
-      <h2>Ver Santos</h2>
+      <h2>Ver</h2>
       <table class="crud-table">
         <thead>
           <tr>
@@ -116,7 +116,7 @@
 
     const getAll = async () => {
       try {
-        let res = await fetch("https://app-corss.herokuapp.com/cliente"),
+        let res = await fetch("https://modulo-factura.herokuapp.com/cliente"),
           json = await res.json();
 
         if (!res.ok) throw { status: res.status, statusText: res.statusText };
@@ -132,7 +132,7 @@
           $template.querySelector(".cl_telefono").textContent = el.cl_telefono;
           $template.querySelector(".cl_email").textContent = el.cl_email;
           $template.querySelector(".cl_estado").textContent = el.cl_estado;
-          $template.querySelector(".edit").dataset.id = el.id;
+          /* $template.querySelector(".edit").dataset.id = el.id; */
           $template.querySelector(".edit").dataset.cl_cedula = el.cl_cedula;
           $template.querySelector(".edit").dataset.cl_nombre = el.cl_nombre;
           $template.querySelector(".edit").dataset.cl_fechanac = el.cl_fechanac;
@@ -141,7 +141,7 @@
           $template.querySelector(".edit").dataset.cl_telefono = el.cl_telefono;
           $template.querySelector(".edit").dataset.cl_email = el.cl_email;
           $template.querySelector(".edit").dataset.cl_estado = el.cl_estado;
-          $template.querySelector(".delete").dataset.id = el.id;
+          $template.querySelector(".delete").dataset.id = el.cl_cedula;
 
           let $clone = d.importNode($template, true);
           $fragment.appendChild($clone);
@@ -180,7 +180,7 @@
                 
               })
             },
-              res = await fetch("https://app-corss.herokuapp.com/cliente", options),
+              res = await fetch("https://modulo-factura.herokuapp.com/cliente", options),
               json = await res.json();
 
             if (!res.ok) throw { status: res.status, statusText: res.statusText };
@@ -207,11 +207,11 @@
                 cl_telefono: e.target.cl_telefono.value,
                 cl_email: e.target.cl_email.value,
                 cl_estado: e.target.cl_estado.value,
-                tc_id: e.target.tc_descripcion.value ,
+                tc_id: e.target.tc_id.value ,
 
               })
             },
-              res = await fetch(`https://app-corss.herokuapp.com/cliente/${e.target.cl_cedula.value}`, options),
+              res = await fetch(`https://modulo-factura.herokuapp.com/cliente`, options),
               json = await res.json();
 
             if (!res.ok) throw { status: res.status, statusText: res.statusText };
@@ -252,7 +252,7 @@
                 "Content-type": "application/json; charset=utf-8"
               }
             },
-              res = await fetch(`https://app-corss.herokuapp.com/cliente/${e.target.dataset.id}`, options),
+              res = await fetch(`https://modulo-factura.herokuapp.com/cliente/${e.target.dataset.id}`, options),
               json = await res.json();
 
             if (!res.ok) throw { status: res.status, statusText: res.statusText };
