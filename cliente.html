@@ -50,7 +50,7 @@
       
         <input type="text" name="cl_direccion" placeholder="cl_direccion" required>
         <br>
-        <input type="number" name="cl_telefono" placeholder="cl_telefono" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required>
+        <input type="number" name="cl_telefono" placeholder="cl_telefono" maxlength="10" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required>
         <br>
         <input type="email" name="cl_email" placeholder="cl_email" required>
         <br>
