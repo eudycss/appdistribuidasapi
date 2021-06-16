@@ -40,7 +40,7 @@
       <h2 class="crud-title">Agregar </h2>
       <form class="crud-form col-6" >
         <div class="mb-3">
-        <input type="number" name="cl_cedula" placeholder="cedula"  maxlength="10" size="10" required>
+        <input type="number" name="cl_cedula" placeholder="cedula"    maxlength="10" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required>
         <br>
         <input type="text" name="cl_nombre" placeholder="nombre" required>
         <br>
@@ -50,7 +50,7 @@
       
         <input type="text" name="cl_direccion" placeholder="cl_direccion" required>
         <br>
-        <input type="number" name="cl_telefono" placeholder="cl_telefono" required>
+        <input type="number" name="cl_telefono" placeholder="cl_telefono" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required>
         <br>
         <input type="email" name="cl_email" placeholder="cl_email" required>
         <br>

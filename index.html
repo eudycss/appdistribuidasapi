@@ -44,13 +44,13 @@
        <!--  <input type="text" name="fac_id" placeholder="cedula" required>
         <br> -->
         <label for="exampleInputEmail1" class="form-label">Fecha</label>
-        <input type="text" name="fac_fecha" placeholder="fecha" class="form-control" required>
+        <input type="date" name="fac_fecha" placeholder="fecha" class="form-control" required>
         <br>
-        <label for="exampleInputEmail1" class="form-label">Mer_p</label>
-        <input type="text" name="mp_id" placeholder="metodoP" class="form-control" required >
+        <label for="exampleInputEmail1" class="form-label">Met_p</label>
+        <input type="number" name="mp_id" placeholder="metodoP" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  maxlength="1" class="form-control" required >
         <br>
         <label for="exampleInputEmail1" class="form-label">Cedula</label>
-        <input type="text" name="cl_cedula" placeholder="cl_cedula" class="form-control" required>
+        <input type="number" name="cl_cedula" placeholder="cl_cedula" class="form-control" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  maxlength="10" required>
         <br>
       </div>
 
