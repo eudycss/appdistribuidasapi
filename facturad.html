@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta fac_id="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <title>CRUD API REST FETCH</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="./facturad.html">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="./facturad.html">Factura</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./cliente.html">Cliente</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container-lg">
+  <h1>CRUD API REST FETCH</h1>
+  <section class="crud">
+    <article>
+      <h2 class="crud-title">Agregar Factura</h2>
+      
+      <form class="crud-form col-6">
+        <div class="mb-3">
+       <!--  <input type="text" name="fac_id" placeholder="cedula" required>
+        <br> -->
+        <label for="exampleInputEmail1" class="form-label">Fecha</label>
+        <input type="text" name="fac_fecha" placeholder="fecha" class="form-control" required>
+        <br>
+        <label for="exampleInputEmail1" class="form-label">Mer_p</label>
+        <input type="text" name="mp_id" placeholder="metodoP" class="form-control" required >
+        <br>
+        <label for="exampleInputEmail1" class="form-label">Cedula</label>
+        <input type="text" name="cl_cedula" placeholder="cl_cedula" class="form-control" required>
+        <br>
+      </div>
+
+        <button type="submit" value="Enviar" class="btn btn-primary"> Enviar</button>
+        <input type="hidden" name="fac_id">
+       
+      </form>
+     
+    </article>
+    <article>
+      <h2>Ver Detalle Factura</h2>
+      <table class="crud-table">
+        <thead>
+          <tr>
+            <th>FECHA</th>
+            <th>MP</th>
+            <th>CEDULA</th>
+            
+             <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </article>
+  </section>
+  <template id="crud-template">
+    <tr>
+      
+      <td class="fac_fecha"></td>
+      <td class="mp_id"></td>
+       <td class="cl_cedula"></td>
+      <td>
+        <button class="edit">Editar</button>
+        <button class="delete">Eliminar</button>
+      </td>
+    </tr>
+  </template>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+  <script>
+    /* **********     Curso JavaScript: 117. APIs REST: CRUD con Fetch (1/2) - #jonmircha     ********** */
+    /* **********     Curso JavaScript: 118. APIs REST: CRUD con Fetch (2/2) - #jonmircha     ********** */
+    const d = document,
+      $table = d.querySelector(".crud-table"),
+      $form = d.querySelector(".crud-form"),
+      $title = d.querySelector(".crud-title"),
+      $template = d.getElementById("crud-template").content,
+      $fragment = d.createDocumentFragment();
+
+    const getAll = async () => {
+      try {
+        let res = await fetch("https://modulo-factura.herokuapp.com/factura"),
+          json = await res.json();
+
+        if (!res.ok) throw { status: res.status, statusText: res.statusText };
+
+        console.log(json);
+        json.forEach(el => {
+          /* $template.querySelector(".fac_id").textContent = el.nombre; */
+          
+          $template.querySelector(".fac_fecha").textContent = el.fac_fecha;
+          $template.querySelector(".mp_id").textContent = el.mp_id;
+          $template.querySelector(".cl_cedula").textContent = el.cl_cedula;
+          $template.querySelector(".edit").dataset.fac_id = el.fac_id;
+          $template.querySelector(".edit").dataset.fac_fecha = el.fac_fecha;
+          $template.querySelector(".edit").dataset.mp_id = el.mp_id;
+          $template.querySelector(".edit").dataset.cl_cedula = el.cl_cedula;
+          
+          
+        
+          $template.querySelector(".delete").dataset.fac_id = el.fac_id;
+
+          let $clone = d.importNode($template, true);
+          $fragment.appendChild($clone);
+        });
+
+        $table.querySelector("tbody").appendChild($fragment);
+      } catch (err) {
+        let message = err.statusText || "Ocurrió un error";
+        $table.insertAdjacentHTML("afterend", `<p><b>Error ${err.status}: ${message}</b></p>`);
+      }
+    }
+
+    d.addEventListener("DOMContentLoaded", getAll);
+
+    d.addEventListener("submit", async e => {
+      if (e.target === $form) {
+        e.preventDefault();
+
+        if (!e.target.fac_id.value) {
+          //Create - POST
+          try {
+            let options = {
+              method: "POST",
+              headers: {
+                "Content-type": "application/json; charset=utf-8"
+              },
+              body: JSON.stringify({
+               
+                fac_fecha: e.target.fac_fecha.value,
+                mp_id: e.target.mp_id.value,
+                cl_cedula: e.target.cl_cedula.value,
+                
+                
+              })
+            },
+              res = await fetch("https://modulo-factura.herokuapp.com/factura", options),
+              json = await res.json();
+              console.log(json)
+
+            if (!res.ok) throw { status: res.status, statusText: res.statusText };
+
+            location.reload();
+          } catch (err) {
+            let message = err.statusText || "Ocurrió un error";
+            $form.insertAdjacentHTML("afterend", `<p><b>Error ${err.status}: ${message}</b></p>`);
+          }
+        } else {
+          //Update - PUT
+          try {
+            let options = {
+              method: "PUT",
+              headers: {
+                "Content-type": "application/json; charset=utf-8"
+              },
+              body: JSON.stringify({
+                fac_id:e.target.fac_id.value ,
+                mp_id: e.target.mp_id.value,
+                cl_cedula: e.target.cl_cedula.value,
+                             
+              })
+            },
+              res = await fetch(`https://modulo-factura.herokuapp.com/factura/`, options),
+              json = await res.json();
+              console.log(json)
+
+            if (!res.ok) throw { status: res.status, statusText: res.statusText };
+
+            location.reload();
+          } catch (err) {
+            let message = err.statusText || "Ocurrió un error";
+            $form.insertAdjacentHTML("afterend", `<p><b>Error ${err.status}: ${message}</b></p>`);
+          }
+        }
+      }
+    });
+
+    d.addEventListener("click", async e => {
+      if (e.target.matches(".edit")) {
+        $title.textContent = "Editar Factura";
+        
+        $form.fac_fecha.value = e.target.dataset.fac_fecha;
+        $form.mp_id.value = e.target.dataset.mp_id;
+        $form.cl_cedula.value = e.target.dataset.cl_cedula;
+        $form.fac_id.value = e.target.dataset.fac_id;
+      }
+
+      if (e.target.matches(".delete")) {
+        let isDelete = confirm(`¿Estás seguro de eliminar el id ${e.target.dataset.fac_id}?`);
+
+        if (isDelete) {
+          //Delete - DELETE
+          try {
+            let options = {
+              method: "DELETE",
+              headers: {
+                "Content-type": "application/json; charset=utf-8"
+              },
+              body: JSON.stringify({
+                fac_id: e.target.dataset.fac_id
+              })
+            },
+              res = await fetch(`https://modulo-factura.herokuapp.com/factura`, options),
+              json = await res.json();
+
+            if (!res.ok) throw { status: res.status, statusText: res.statusText };
+
+            location.reload();
+          } catch (err) {
+            let message = err.statusText || "Ocurrió un error";
+            alert(`Error ${err.status}: ${message}`);
+          }
+        }
+      }
+    })
+    
+  </script>
+ 
+</body>
+
+</html>
