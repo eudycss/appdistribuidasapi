@@ -11,14 +11,14 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="./facturad.html">Navbar</a>
+      <a class="navbar-brand" href="./index.html">Navbar</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="./facturad.html">Factura</a>
+            <a class="nav-link active" aria-current="page" href="./index.html">Factura</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./cliente.html">Cliente</a>
@@ -40,19 +40,19 @@
       <h2 class="crud-title">Agregar </h2>
       <form class="crud-form col-6" >
         <div class="mb-3">
-        <input type="text" name="cl_cedula" placeholder="cedula" required>
+        <input type="number" name="cl_cedula" placeholder="cedula"  maxlength="10" size="10" required>
         <br>
         <input type="text" name="cl_nombre" placeholder="nombre" required>
         <br>
 
-        <input type="text" name="cl_fechanac" placeholder="cl_fechanac" required>
+        <input type="date" name="cl_fechanac" placeholder="cl_fechanac" required>
         <br>
       
         <input type="text" name="cl_direccion" placeholder="cl_direccion" required>
         <br>
-        <input type="text" name="cl_telefono" placeholder="cl_telefono" required>
+        <input type="number" name="cl_telefono" placeholder="cl_telefono" required>
         <br>
-        <input type="text" name="cl_email" placeholder="cl_email" required>
+        <input type="email" name="cl_email" placeholder="cl_email" required>
         <br>
         <input type="text" name="cl_estado" placeholder="cl_estado" required>
         <br>
@@ -141,7 +141,7 @@
           $template.querySelector(".edit").dataset.cl_telefono = el.cl_telefono;
           $template.querySelector(".edit").dataset.cl_email = el.cl_email;
           $template.querySelector(".edit").dataset.cl_estado = el.cl_estado;
-          $template.querySelector(".delete").dataset.id = el.cl_cedula;
+          $template.querySelector(".delete").dataset.cl_cedula = el.cl_cedula;
 
           let $clone = d.importNode($template, true);
           $fragment.appendChild($clone);
@@ -250,9 +250,12 @@
               method: "DELETE",
               headers: {
                 "Content-type": "application/json; charset=utf-8"
-              }
+              },
+              body: JSON.stringify({
+                cl_cedula: e.target.dataset.cl_cedula
+              })
             },
-              res = await fetch(`https://modulo-factura.herokuapp.com/cliente/${e.target.dataset.id}`, options),
+              res = await fetch(`https://modulo-factura.herokuapp.com/cliente`, options),
               json = await res.json();
 
             if (!res.ok) throw { status: res.status, statusText: res.statusText };
